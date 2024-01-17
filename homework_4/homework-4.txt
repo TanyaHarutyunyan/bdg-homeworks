@@ -1,0 +1,56 @@
+    1  clear
+    2  sudo useradd jane
+    3  sudo userdel jane
+    4  sudo useradd -m ani
+    5  grep ani /etc/passwd
+    6  sudo userdel -r ani
+    7  sudo useradd -mk /home/tanya/ aram
+    8  sudo groupadd -g 1500 researcher
+    9  sudo usermod -g researcher aram
+   10  sudo usermod -a -G sudo aram
+   11  sudo passwd aram
+   12  grep aram /etc/passwd
+   13  sudo su aram
+   14  sudo userdel -r aram
+   15  history > homework-4.txt
+   
+    1  clear
+    2  touch test-file-assignment
+    3  mkdir test-directory-assignment
+    4  ll test-file-assignment > output-file
+    5  ll test-directory-assignment > output-directory
+    6  sudo useradd test
+    7  sudo groupadd researcher
+    8  sudo usermod -a -G researcher test
+    9  sudo su test
+   10  sudo chown test test-file-assignment
+   11  sudo chown :researcher test-directory-assignment
+   12  sudo chmod 107 test-file-assignment
+   13  sudo chmod 700 test-directory-assignment
+   14  ls -l | grep test-
+   15  ll test-file-assignment >> output-file
+   16  ll test-directory-assignment >> output-directory 
+   17  sudo userdel test
+   18  sudo groupdel researcher
+   19  ll test-directory-assignment >> output-directory
+   20  ll test-file-assignment >> output-file
+   21  history >> homework-4.txt
+   
+    1  clear
+    2  sudo cp /etc/shadow /tmp
+    3  sudo passwd tanya
+    4  sudo passwd root
+    5  sudo diff /tmp/shadow /etc/shadow
+    6  history >> homework-4.txt 
+   
+    1  clear
+    2  cp /etc/passwd /etc/group /tmp
+    3  sudo useradd jane
+    4  sudo usermod -c "comment for jane" jane
+    5  sudo usermod -a -G sudo jane
+    6  diff /tmp/group /etc/group
+    7  diff /tmp/passwd /etc/passwd
+    8  sudo deluser jane sudo
+    9  diff /tmp/group /etc/group
+   10  diff /tmp/passwd /etc/passwd
+   11  history >> homework-4.txt 
