@@ -1,0 +1,10 @@
+    1  clear
+    2  who
+    3  pwd
+    4  last
+    5  ls
+    6  touch hello
+    7  ls -l
+    8  ls -l -a
+    9  touch homework-1.txt
+   10  history > homework-1.txt
