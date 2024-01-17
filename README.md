@@ -8,23 +8,23 @@
 * ### Download and Install Prometheus
      
      
-      - wget https://github.com/prometheus/prometheus/releases/download/v2.37.6/prometheus-2.37.6.linux-amd64.tar.gz
+    - wget https://github.com/prometheus/prometheus/releases/download/v2.37.6/prometheus-2.37.6.linux-amd64.tar.gz
         
-      - tar xvfz prometheus-*.tar.gz
+    - tar xvfz prometheus-*.tar.gz
   
-      - rm prometheus-*.tar.gz
+    - rm prometheus-*.tar.gz
   
-      - sudo mkdir /etc/prometheus /var/lib/prometheus
+    - sudo mkdir /etc/prometheus /var/lib/prometheus
   
-      - cd prometheus-2.37.6.linux-amd64
+    - cd prometheus-2.37.6.linux-amd64
   
-      - sudo mv prometheus promtool /usr/local/bin/ 
+    - sudo mv prometheus promtool /usr/local/bin/ 
   
-      - sudo mv prometheus.yml /etc/prometheus/prometheus.yml
+    - sudo mv prometheus.yml /etc/prometheus/prometheus.yml
   
-      - sudo mv consoles/ console_libraries/ /etc/prometheus/
+    - sudo mv consoles/ console_libraries/ /etc/prometheus/
   
-      - prometheus --version
+    - prometheus --version
 
 
 * ### Configure Prometheus as a Service
