@@ -1,0 +1,69 @@
+    1  clear
+    2  alias tmp="ls /tmp"
+    3  tmp
+    4  unalias tmp
+    5  echo "The apartment costs \$100000"
+    6  echo "Hello; World"
+    7  cost=5000 && echo "The service costs $cost"
+    8  clear
+    9  man diff
+   10  man cal
+   11  cal -y 2028
+   12  cal -y 2028 > calendar-2028.txt
+   13  clear
+   14  man date
+   15  date --date="2 years ago"
+   16  man last
+   17  last -F
+   18  clear
+   19  man cat
+   20  cat calendar-2028.txt
+   21  clear
+   22  man chmod
+   23  touch test.sh
+   24  ls -l test.sh
+   25  chmod 700 test.sh
+   26  ls -l test.sh
+   27  chmod o=rwx test.sh
+   28  ls -l test.sh
+   29  chmod 607 test.sh
+   30  ls -l test.sh
+   31  chmod u-w,u+x test.sh
+   32  ls -l test.sh
+   33  chmod 403 test.sh
+   34  ls -l test.sh
+   35  chmod u+w,g=rw,o='-' test.sh
+   36  ls -l test.sh
+   37  chmod 703 test.sh
+   38  ls -l test.sh
+   39  chmod u-wx,g+r,o+r test.sh
+   40  ls -l test.sh
+   41  chmod 744 test.sh
+   42  ls -l test.sh
+   43  clear
+   44  colour=red
+   45  echo $colour
+   46  colour=blue
+   47  echo $colour
+   48  env
+   49  env > env.txt
+   50  export colour
+   51  env
+   52  env > env-new.txt
+   53  diff env.txt env-new.txt
+   54  unset colour
+   55  env
+   56  clear
+   57  touch first-file
+   58  cp first-file /tmp
+   59  mkdir first-directory
+   60  mv first-file first-directory
+   61  ls first-directory
+   62  mv first-directory /tmp
+   63  cd /tmp
+   64  ls | grep first
+   65  rm first-file
+   66  rm -rf first-directory
+   67  ls | grep first
+   68  cd
+   69  history > homework-2-command.txt

@@ -1,0 +1,41 @@
+    1  clear
+    2  cd /var/log
+    3  du -sh *
+    4  cp kern.log /tmp
+    5  cd /tmp && ls
+    6  gzip kern.log
+    7  du -sh *
+    8  gunzip kern.log.gz
+    9  du -sh *
+   10  cd 
+   11  history > homework-3-slides.txt 
+    
+    1  clear
+    2  cd /var/log
+    3  cp syslog /tmp
+    4  cp kern.log /tmp
+    5  cd /tmp && ls
+    6  tar -c -f logs.tar syslog kern.log
+    7  ls
+    8  rm kern.log syslog
+    9  tar -t -f logs.tar
+   10  tar -x -f logs.tar
+   11  ls
+   12  cd 
+   13  history >> homework-3-slides.txt 
+   
+    1  clear
+    2  grep bash /etc/passwd
+    3  grep -n bash /etc/passwd
+    4  grep -c bash /etc/passwd
+    5  grep -v bash /etc/passwd
+    6  history >> homework-3-slides.txt
+    
+    1  clear
+    2  ps
+    3  ps --forest
+    4  ps aux | head -n 4
+    5  htop
+    6  kill -9 15541
+    7  cat /proc/loadavg
+    8  history >> homework-3-slides.txt 

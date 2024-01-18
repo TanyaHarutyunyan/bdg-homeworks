@@ -1,0 +1,41 @@
+    1  clear
+    2  wget https://github.com/prometheus/prometheus/releases/download/v2.37.6/prometheus-2.37.6.linux-amd64.tar.gz
+    3  tar xvfz prometheus-*.tar.gz
+    4  rm prometheus-*.tar.gz
+    5  sudo mkdir /etc/prometheus /var/lib/prometheus
+    6  cd prometheus-2.37.6.linux-amd64
+    7  sudo mv prometheus promtool /usr/local/bin/
+    8  sudo mv prometheus.yml /etc/prometheus/prometheus.yml
+    9  sudo mv consoles/ console_libraries/ /etc/prometheus/
+   10  cd ..
+   11  mv prometheus-2.37.6.linux-amd64/ prometheus
+   12  prometheus --version
+   13  sudo useradd -rs /bin/false prometheus
+   14  sudo chown -R prometheus: /etc/prometheus /var/lib/prometheus
+   15  sudo vi /etc/systemd/system/prometheus.service
+   16  sudo systemctl daemon-reload
+   17  sudo systemctl enable prometheus
+   18  sudo systemctl start prometheus
+   19  sudo systemctl status prometheus
+   20  wget https://github.com/prometheus/node_exporter/releases/download/v1.5.0/node_exporter-1.5.0.linux-amd64.tar.gz
+   21  tar xvfz node_exporter-*.tar.gz
+   22  sudo mv node_exporter-1.5.0.linux-amd64/node_exporter /usr/local/bin
+   23  rm -r node_exporter-1.5.0.linux-amd64*
+   24  sudo useradd -rs /bin/false node_exporter
+   25  sudo vi /etc/systemd/system/node_exporter.service
+   26  sudo systemctl enable node_exporter
+   27  sudo systemctl daemon-reload
+   28  sudo systemctl start node_exporter
+   29  sudo systemctl status node_exporter
+   30  sudo vi /etc/prometheus/prometheus.yml
+   31  sudo systemctl restart prometheus
+   32  sudo apt-get install -y apt-transport-https software-properties-common
+   33  sudo wget -q -O /usr/share/keyrings/grafana.key https://apt.grafana.com/gpg.key
+   34  echo "deb [signed-by=/usr/share/keyrings/grafana.key] https://apt.grafana.com stable main" | sudo tee -a /etc/apt/sources.list.d/grafana.list
+   35  sudo apt update
+   36  sudo apt install grafana
+   37  sudo systemctl daemon-reload
+   38  sudo systemctl enable grafana-server.service
+   39  sudo systemctl start grafana-server
+   40  sudo systemctl status grafana-server
+   41  history > homework.4-5.txt
