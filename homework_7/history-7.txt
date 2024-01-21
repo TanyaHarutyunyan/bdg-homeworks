@@ -1,0 +1,37 @@
+    1  cd bdg-homeworks
+    2  git branch
+    3  git checkout -b homework_7
+    4  mkdir homework_7
+    5  cd ..
+    6  mkdir bdg-homeworks-2
+    7  cd bdg-homeworks-2
+    8  git init
+    9  git remote add origin git@github.com:TanyaHarutyunyan/bdg-homeworks-2.git
+   10  git commit --allow-empty -m "Setup bdg-homeworks-2 repository"
+   11  git push
+   12  git push --set-upstream origin master
+   13  git checkout -b homework_7
+   14  touch file1
+   15  git add .
+   16  git commit -m "Add file1"
+   17  touch file2
+   18  git add .
+   19  git commit -m "Add file2"
+   20  touch file3
+   21  git add .
+   22  git commit -m "Add file3"
+   23  git status
+   24  git log
+   25  git revert HEAD
+   26  git log
+   27  git reset a9cf59673e335dcecc8c1278d8392b8c65f28086
+   28  git push
+   29  git push --set-upstream origin homework_7
+   30  cd bdg-homeworks/homework_7
+   31  git branch
+   32  git status
+   33  history > touch history-7.txt
+   34  git add
+   35  git commit -m "Add history-7.txt file"
+   36  git push
+   37  git push --set-upstream origin homework_7
