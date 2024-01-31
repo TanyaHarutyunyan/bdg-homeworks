@@ -2,27 +2,23 @@
 
 set -ex
 
-if [ -z "$1" ]; then
- echo -e "\033[31m Error: One argument is required!\033[0m"
- exit 1
+if [ ! -f node_exporter-*.tar.gz ]; then
+  wget https://github.com/prometheus/node_exporter/releases/download/v1.5.0/node_exporter-1.5.0.linux-amd64.tar.gz
+  tar xvfz node_exporter-*.tar.gz
+else
+  tar xvfz node_exporter-*.tar.gz
 fi
 
-if [ "$#" -ne 1 ]; then
-  echo -e "\033[31m Error: Only one argument is required!\033[0m"
-  exit 1
+cp -f node_exporter-1.5.0.linux-amd64/node_exporter /usr/local/bin
+
+rm -r node_exporter-1.5.0.linux-amd64*
+
+if ! id "node_exporter" >/dev/null 2>&1  ; then
+  useradd -rs /bin/false node_exporter
 fi
 
-if [[ "$1" -eq "amd64" ]]; then
-  echo -e "\033[31m Error: Only amd64 or arm64 are supported!\033[0m"
-  exit 1
-fi
+cp -f node_exporter.service /etc/systemd/system
 
-wget https://github.com/prometheus/node_exporter/releases/download/v1.5.0/node_exporter-1.5.0.linux-$1.tar.gz
-tar xvfz node_exporter-*.tar.gz
-cp node_exporter-1.5.0.linux-$1/node_exporter /usr/local/bin
-rm -r node_exporter-1.5.0.linux-$1*
-useradd -rs /bin/false node_exporter
-cp node_exporter.service /etc/systemd/system
 systemctl enable node_exporter
 systemctl daemon-reload
 systemctl start node_exporter

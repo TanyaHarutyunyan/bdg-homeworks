@@ -2,34 +2,50 @@
 
 set -ex
 
-if [ -z "$1" ]; then
- echo -e "\033[31m Error: One argument is required!\033[0m"
- exit 1
+if [ ! -f prometheus-*.tar.gz ]; then
+  wget https://github.com/prometheus/prometheus/releases/download/v2.37.6/prometheus-2.37.6.linux-amd64.tar.gz
+  tar xvfz prometheus-*.tar.gz
+else 
+  tar xvfz prometheus-*.tar.gz
 fi
 
-if [ "$#" -ne 1 ]; then
-  echo -e "\033[31m Error: Only one argument is required!\033[0m"
-  exit 1
-fi
-
-if [[ "$1" -eq "amd64" ]]; then
-  echo -e "\033[31m Error: Only amd64 or arm64 are supported!\033[0m"
-  exit 1
-fi
-
-wget https://github.com/prometheus/prometheus/releases/download/v2.37.6/prometheus-2.37.6.linux-$1.tar.gz
-tar xvfz prometheus-*.tar.gz
 rm prometheus-*.tar.gz
-mkdir /etc/prometheus /var/lib/prometheus
-cd prometheus-2.37.6.linux-$1
-cp prometheus promtool /usr/local/bin/
+
+if [ ! -d /etc/prometheus ]; then
+  mkdir -p /etc/prometheus/
+fi
+
+if [ ! -d /var/lib/prometheus ]; then
+  mkdir -p /var/lib/prometheus/
+fi
+
+cd prometheus-2.37.6.linux-amd64
+
+cp -f prometheus /usr/local/bin/
+
+cp -f promtool /usr/local/bin/
+
 rm prometheus.yml
-cp -r consoles/ console_libraries/ /etc/prometheus/
-useradd -rs /bin/false prometheus
+
+if [ ! -d /etc/prometheus/consoles ]; then
+  cp -r consoles/ /etc/prometheus/
+fi
+
+if [ ! -d /etc/prometheus/console_libraries ]; then
+  cp -r console_libraries/ /etc/prometheus/
+fi
+
+if ! id "prometheus" >/dev/null 2>&1  ; then
+  useradd -rs /bin/false prometheus
+fi
+
 chown -R prometheus: /etc/prometheus /var/lib/prometheus
 cd ..
-cp prometheus.yml /etc/prometheus/
-cp prometheus.service /etc/systemd/system
+
+cp -f prometheus.yml /etc/prometheus/
+
+cp -f prometheus.service /etc/systemd/system
+
 systemctl daemon-reload
 systemctl enable prometheus
 systemctl start prometheus
