@@ -1,0 +1,19 @@
+FROM centos:latest
+
+# Update packages (no need for sudo as you're already root)
+RUN yum -y update
+
+# Install nginx
+RUN yum -y install nginx
+
+# Copy index.html to the correct NGINX root directory
+COPY index.html /usr/share/nginx/html/index.html
+
+# Expose ports
+EXPOSE 80 443
+
+# Start nginx in the foreground
+ENTRYPOINT ["nginx", "-g", "daemon off;"]
+
+# Add a label
+LABEL nginx=v2
