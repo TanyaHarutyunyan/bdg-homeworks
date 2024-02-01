@@ -1,3 +1,5 @@
 FROM nginx
-COPY index.html /var/www/html/
-LABEL nginx=v1
+
+COPY index.html /usr/share/nginx/html/
+
+LABEL name=nginx version=v1

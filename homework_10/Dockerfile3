@@ -11,4 +11,4 @@ EXPOSE 80 443
 
 CMD ["nginx", "-g", "daemon off;"]
 
-LABEL maintainer="Your Name <your.email@example.com>"
+MAINTAINER TaniaArutiunian<tanyaharutyunyan01@gmail.com>

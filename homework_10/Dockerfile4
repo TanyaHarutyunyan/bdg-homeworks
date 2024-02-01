@@ -1,8 +1,12 @@
 FROM ubuntu
-RUN apt update
-RUN apt install -y apache2
+
+RUN apt update && \
+    apt install -y apache2
+
 COPY index.html /var/www/html/
-EXPOSE 80
-EXPOSE 443
+
+EXPOSE 80 443
+
 CMD ["apache2ctl", "-D", "FOREGROUND"]
-MAINTAINER apache:v1
+
+MAINTAINER TaniaArutiunian<tanyaharutyunyan01@gmail.com>
