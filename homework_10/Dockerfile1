@@ -1,5 +1,6 @@
 FROM nginx
 
+LABEL owner=TaniaArutiunian
+
 COPY index.html /usr/share/nginx/html/
 
-LABEL name=nginx version=v1
