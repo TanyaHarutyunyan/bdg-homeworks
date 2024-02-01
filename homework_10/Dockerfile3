@@ -1,19 +1,14 @@
-FROM centos:latest
+FROM centos
 
-# Update packages (no need for sudo as you're already root)
-RUN yum -y update
+RUN sed -i 's|mirrorlist=|#mirrorlist=|g' /etc/yum.repos.d/CentOS-* && \
+    sed -i 's|#baseurl=http://mirror.centos.org|baseurl=http://vault.centos.org|g' /etc/yum.repos.d/CentOS-* && \
+    yum -y install epel-release && \
+    yum -y install nginx
 
-# Install nginx
-RUN yum -y install nginx
+COPY index.html /usr/share/nginx/html
 
-# Copy index.html to the correct NGINX root directory
-COPY index.html /usr/share/nginx/html/index.html
-
-# Expose ports
 EXPOSE 80 443
 
-# Start nginx in the foreground
-ENTRYPOINT ["nginx", "-g", "daemon off;"]
+CMD ["nginx", "-g", "daemon off;"]
 
-# Add a label
-LABEL nginx=v2
+LABEL maintainer="Your Name <your.email@example.com>"
