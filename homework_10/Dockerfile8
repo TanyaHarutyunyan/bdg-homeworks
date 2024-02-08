@@ -1,0 +1,10 @@
+FROM alpine
+
+LABEL owner=TaniaArutiunian
+
+RUN apk update && \
+    apk add redis
+
+EXPOSE 6379
+
+CMD ["redis-server"]

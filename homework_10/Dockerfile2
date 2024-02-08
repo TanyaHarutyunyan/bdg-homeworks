@@ -1,0 +1,13 @@
+FROM ubuntu
+
+LABEL owner=TaniaArutiunian
+
+RUN apt update && \
+    apt install -y nginx
+
+COPY index.html /var/www/html/
+
+EXPOSE 80 443
+
+ENTRYPOINT [ "/usr/sbin/nginx", "-g", "daemon off;" ]
+
