@@ -1,0 +1,19 @@
+1)
+docker network create nginx
+docker network ls
+docker run -d --name nginx1 --network nginx -p 8081:80 nginx:latest
+docker run -d --name nginx2 --network nginx -p 8082:80 nginx:latest
+docker exec -ti nginx1 bash
+    - curl http://nginx2:80
+    - exit
+
+
+2)
+docker run -d --name nginx3 --network host nginx:latest
+
+
+3)
+docker run -d --name nginx4 --network nginx -p 8084:80 nginx:latest
+docker exec -ti nginx1 bash
+    - curl http://nginx4:80
+    - exit

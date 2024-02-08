@@ -1,0 +1,26 @@
+1)
+docker network create nginx
+docker volume create nginx-vol
+docker run -d --name nginx1 --network nginx --restart unless-stopped -v nginx-vol:/usr/share/nginx/html -p 8081:80 nginx:latest
+docker exec -ti nginx1 bash
+    - apt update
+    - apt install vim
+    - vim /usr/share/nginx/html/index.html
+    - (make changes in /usr/share/nginx/html/index.html)
+    - exit
+sudo systemctl restart docker.service
+docker ps
+docker rm -f nginx1
+docker ps
+docker run -d --name nginx1 --network nginx --restart unless-stopped -v nginx-vol:/usr/share/nginx/html -p 8081:80 nginx:latest
+
+
+2)
+mkdir -p ~/tmp/html
+cp index.html ~/tmp/html
+docker run -d --name nginx2 --network nginx --restart unless-stopped -v /home/tanya/tmp/html:/usr/share/nginx/html -p 8082:80 nginx:latest
+sudo vi tmp/html/index.html
+    - (make changes in tmp/html/index.html)
+docker ps
+docker rm -f nginx2
+docker run -d --name nginx2 --network nginx --restart unless-stopped -v /home/tanya/tmp/html:/usr/share/nginx/html -p 8082:80 nginx:latest
