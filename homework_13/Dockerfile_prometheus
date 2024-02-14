@@ -19,4 +19,4 @@ EXPOSE 9090
 
 ENTRYPOINT ["/usr/local/bin/prometheus"]
 
-CMD ["--config.file=/etc/prometheus/prometheus.yml", "cfg:default.paths.provisioning=/etc/grafana/provisioning"]
+CMD ["--config.file=/etc/prometheus/prometheus.yml"]
