@@ -1,0 +1,22 @@
+FROM ubuntu
+
+LABEL maintainer="Tania Arutiunian <tanyaharutyunyan01@gmail.com>"
+
+WORKDIR /prometheus
+
+ADD https://github.com/prometheus/prometheus/releases/download/v2.37.6/prometheus-2.37.6.linux-amd64.tar.gz .
+
+RUN tar xvfz prometheus-*.tar.gz && \
+    rm prometheus-*.tar.gz && \
+    mkdir /etc/prometheus /var/lib/prometheus && \
+    cd prometheus-2.37.6.linux-amd64 && \
+    mv prometheus promtool /usr/local/bin/ && \
+    mv consoles/ console_libraries/ /etc/prometheus/
+
+COPY prometheus.yml /etc/prometheus/prometheus.yml
+
+EXPOSE 9090
+
+ENTRYPOINT ["/usr/local/bin/prometheus"]
+
+CMD ["--config.file=/etc/prometheus/prometheus.yml", "cfg:default.paths.provisioning=/etc/grafana/provisioning"]
