@@ -1,3 +1,4 @@
+# TODO Make IP addresses dynamic
 [NodeExporter]
 16.171.148.137 ansible_user=ubuntu
 
