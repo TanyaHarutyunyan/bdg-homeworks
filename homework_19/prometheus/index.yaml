@@ -1,57 +1,57 @@
 - hosts: Prometheus
   become: true
   tasks:
-    - name: Download prometheus repository.
+    - name: Download prometheus repository
       unarchive:
         src: https://github.com/prometheus/prometheus/releases/download/v2.37.6/prometheus-2.37.6.linux-amd64.tar.gz
         dest: /tmp
         remote_src: true
 
-    - name: Creates /etc/prometheus directory.
+    - name: Creates /etc/prometheus directory
       file:
         path: /etc/prometheus
         state: directory
 
-    - name: Creates /var/lib/prometheus directory.
+    - name: Creates /var/lib/prometheus directory
       file:
         path: /var/lib/prometheus
         state: directory
 
-    - name: Move prometheus binary.
+    - name: Move prometheus binary file
       copy:
         src: /tmp/prometheus-2.37.6.linux-amd64/prometheus
         dest: /usr/local/bin/
         mode: 0755
         remote_src: true
 
-    - name: Move promtool binary.
+    - name: Move promtool binary file
       copy:
         src: /tmp/prometheus-2.37.6.linux-amd64/promtool
         dest: /usr/local/bin/
         mode: 0755
         remote_src: true
 
-    - name: Add prometheus.yml file.
+    - name: Add prometheus.yml file
       copy:
         src: prometheus.yml
         dest: /etc/prometheus/prometheus.yml
         mode: 0755
 
-    - name: Move consoles directory.
+    - name: Move consoles directory
       copy:
         src: /tmp/prometheus-2.37.6.linux-amd64/consoles/
         dest: /etc/prometheus/consoles/
         mode: 0755
         remote_src: true
 
-    - name: Move console_libraries directory.
+    - name: Move console_libraries directory
       copy:
         src: /tmp/prometheus-2.37.6.linux-amd64/console_libraries/
         dest: /etc/prometheus/console_libraries/
         mode: 0755
         remote_src: true
 
-    - name: Create prometheus user.
+    - name: Create prometheus user
       user:
         name: prometheus
         shell: /sbin/nologin
@@ -72,12 +72,12 @@
         src: prometheus.service
         dest: /etc/systemd/system/prometheus.service
 
-    - name: Start service prometheus.
+    - name: Start prometheus service
       service:
         name: prometheus
         state: started
 
-    - name: Enable service prometheus.service.
+    - name: Enable prometheus service
       service:
         name: prometheus
         enabled: yes

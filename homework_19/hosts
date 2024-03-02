@@ -1,8 +1,8 @@
 [NodeExporter]
-13.60.34.86 ansible_user=ubuntu
+16.171.148.137 ansible_user=ubuntu
 
 [Prometheus]
-16.171.198.209 ansible_user=ubuntu
+51.20.4.156 ansible_user=ubuntu
 
 [Grafana]
-13.49.66.238 ansible_user=ubuntu
+13.60.37.94 ansible_user=ubuntu
