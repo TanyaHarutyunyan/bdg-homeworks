@@ -1,0 +1,27 @@
+1)
+cd .ssh-aws/
+ssh -i "devops.pem" ubuntu@ec2-16-171-58-31.eu-north-1.compute.amazonaws.com
+lsblk
+sudo file -s /dev/nvme1n1
+sudo mkfs -t xfs /dev/nvme1n1
+sudo file -s /dev/nvme1n1
+sudo mkdir /data
+sudo mount /dev/nvme1n1 /data
+cd data
+sudo mkdir test
+cd test
+sudo touch file1.txt file2.txt
+exit
+
+
+2)
+cd .ssh-aws/
+ssh -i "devops.pem" ubuntu@ec2-16-16-27-149.eu-north-1.compute.amazonaws.com
+lsblk
+sudo file -s /dev/nvme1n1
+sudo mkdir /data
+sudo mount /dev/nvme1n1 /data
+cd data && ls
+cd test && ls
+exit
+
