@@ -1,5 +1,5 @@
 [NodeExporter]
-13.60.31.187 ansible_user=ubuntu
+13.60.29.4 ansible_user=ubuntu
 
 [NodeExporter:vars]
 version=1.5.0
@@ -7,5 +7,13 @@ os_architecture=amd64
 user_name=node_exporter
 
 [Prometheus]
+51.20.31.242 ansible_user=ubuntu
+
+[Prometheus:vars]
+node_exporter_ip=13.60.29.4
+node_exporter_port=9100
+version=2.37.6
+os_architecture=amd64
+user_name=prometheus
 
 [Grafana]
