@@ -1,4 +1,10 @@
 [NodeExporter]
+13.60.31.187 ansible_user=ubuntu
+
+[NodeExporter:vars]
+version=1.5.0
+os_architecture=amd64
+user_name=node_exporter
 
 [Prometheus]
 
