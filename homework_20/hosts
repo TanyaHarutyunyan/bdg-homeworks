@@ -17,3 +17,8 @@ os_architecture=amd64
 user_name=prometheus
 
 [Grafana]
+16.170.228.111 ansible_user=ubuntu
+
+[Grafana:vars]
+prometheus_ip=51.20.31.242
+prometheus_port=9090
