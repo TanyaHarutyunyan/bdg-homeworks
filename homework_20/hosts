@@ -22,3 +22,9 @@ user_name=prometheus
 [Grafana:vars]
 prometheus_ip=51.20.31.242
 prometheus_port=9090
+
+[Docker]
+16.171.8.108 ansible_user=ubuntu
+
+[Docker:vars]
+lsb_release=focal
