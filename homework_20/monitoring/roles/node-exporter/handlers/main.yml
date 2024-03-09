@@ -1,0 +1,8 @@
+---
+# handlers file for roles/node-exporter
+- name: Restart Node Exporter service
+  listen: restart node_exporter
+  service:
+    name: node_exporter
+    state: restarted
+    enabled: true

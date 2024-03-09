@@ -1,0 +1,5 @@
+---
+# vars file for roles/node-exporter
+version: 1.5.0
+os_architecture: amd64
+user_name: node_exporter
