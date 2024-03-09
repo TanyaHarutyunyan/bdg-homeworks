@@ -1,0 +1,95 @@
+- hosts: Zabbix
+  become: true
+  tasks:
+    - name: Download Zabbix repository
+      get_url:
+        url: https://repo.zabbix.com/zabbix/6.0/ubuntu/pool/main/z/zabbix-release/zabbix-release_6.0-4+ubuntu{{ ubuntu_version }}_all.deb
+        dest: /tmp
+        mode: 0440
+
+    - name: Install Zabbix package
+      apt:
+        deb: /tmp/zabbix-release_6.0-4+ubuntu{{ ubuntu_version }}_all.deb
+        update_cache: yes
+
+    - name: Install required packages
+      apt:
+        name: "{{ item }}"
+        state: present
+        update_cache: yes
+      loop:
+        - zabbix-server-mysql
+        - zabbix-frontend-php
+        - zabbix-nginx-conf
+        - zabbix-sql-scripts
+        - zabbix-agent
+        - python3-pymysql
+
+    - name: Install mysql
+      apt:
+        name: mysql-server
+        state: present
+        update_cache: yes
+
+    - name: Start and enable MySQL service
+      service:
+        name: mysql
+        state: started
+        enabled: yes
+
+    - name: Create db
+      mysql_db:
+        name: zabbix
+        state: present
+        encoding: utf8mb4
+        collation: utf8mb4_bin
+        login_unix_socket: /var/run/mysqld/mysqld.sock
+
+    - name: Create user
+      mysql_user:
+        name: "{{ sql_user_name }}"
+        host: "{{ zabbix_ip }}"
+        password: "{{ sql_user_password }}"
+        priv: '*.*:ALL,GRANT'
+        state: present
+        login_unix_socket: /var/run/mysqld/mysqld.sock
+
+    - name: Add config file
+      template:
+        src: templates/nginx.conf.j2
+        dest: /etc/zabbix/nginx.conf
+
+    - name: Stop Apache service
+      service:
+        name: apache2
+        state: stopped
+
+    - name: Start Zabbix service
+      service:
+        name: "{{ item }}"
+        state: started
+      loop:
+        - zabbix-server
+        - zabbix-agent
+        - nginx
+        - php8.1-fpm
+
+    - name: Change service files permissions
+      file:
+        path: "{{ item }}"
+        mode: 755
+      loop:
+        - /lib/systemd/system/zabbix-server.service
+        - /lib/systemd/system/zabbix-agent.service
+        - /lib/systemd/system/nginx.service
+        - /lib/systemd/system/php8.1-fpm.service
+
+    - name: Enable Zabbix service
+      service:
+        name: "{{ item }}"
+        enabled: yes
+      loop:
+        - zabbix-server
+        - zabbix-agent
+        - nginx
+        - php8.1-fpm
