@@ -1,0 +1,25 @@
+- name: Run Docker and Networking
+  hosts: Docker
+  become: true
+  roles:
+    - docker
+    - networking
+
+- name: Run NodeExporter1
+  hosts: NodeExporter1
+  become: true
+  roles:
+    - node-exporter
+
+- name: Run NodeExporter2
+  hosts: NodeExporter2
+  become: true
+  roles:
+    - node-exporter
+
+- name: Run PrometheusGrafana
+  hosts: PrometheusGrafana
+  become: true
+  roles:
+    - prometheus
+    - grafana
