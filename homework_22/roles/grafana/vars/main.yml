@@ -1,0 +1,8 @@
+---
+# vars file for roles/grafana
+container_name: grafana
+network: monitoring
+container_port: 3000
+restart_policy: always
+prometheus_ip: 16.171.226.100
+prometheus_port: 9090

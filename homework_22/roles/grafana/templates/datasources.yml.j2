@@ -4,5 +4,5 @@ datasources:
   - name: Prometheus
     type: prometheus
     access: proxy
-    url: http://16.170.208.112:9090
+    url: http://{{ prometheus_ip }}:{{ prometheus_port }}
     isDefault: true
