@@ -1,0 +1,9 @@
+---
+# vars file for roles/prometheus
+container_name: prometheus
+network: monitoring
+container_port: 9090
+restart_policy: always
+node_exporter_1_ip: 16.171.226.100
+node_exporter_2_ip: 16.170.206.131
+node_exporter_port: 9100
