@@ -1,0 +1,9 @@
+# TODO Make IP addresses dynamic
+[NodeExporter]
+16.171.148.137 ansible_user=ubuntu
+
+[Prometheus]
+51.20.4.156 ansible_user=ubuntu
+
+[Grafana]
+13.60.37.94 ansible_user=ubuntu

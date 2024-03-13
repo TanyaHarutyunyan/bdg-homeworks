@@ -1,0 +1,58 @@
+- hosts: Grafana
+  become: true
+  tasks:
+    - name: Install apt-transport-https
+      apt:
+        name: apt-transport-https
+        state: present
+        update_cache: yes
+
+    - name: Install software-properties-common
+      apt:
+        name: software-properties-common
+        state: present
+        update_cache: yes
+
+    - name: Install grafana key
+      get_url:
+        url: https://apt.grafana.com/gpg.key
+        dest: /usr/share/keyrings/grafana.key
+
+    - name: Add Grafana repository
+      lineinfile:
+        path: /etc/apt/sources.list.d/grafana.list
+        create: yes
+        line: "deb [signed-by=/usr/share/keyrings/grafana.key] https://apt.grafana.com stable main"
+        state: present
+
+    - name: Install grafana
+      apt:
+        name: grafana
+        state: present
+        update_cache: yes
+
+    - name: Add node-exporter-full.json file
+      copy:
+        src: node-exporter-full.json
+        dest: /var/lib/grafana/dashboards/
+        mode: 0755
+
+    - name: Add node-exporter-full.yaml file
+      copy:
+        src: node-exporter-full.yaml
+        dest: /etc/grafana/provisioning/dashboards/
+
+    - name: Add prometheus.yaml file
+      copy:
+        src: prometheus.yaml
+        dest: /etc/grafana/provisioning/datasources/
+
+    - name: Start grafana-server service
+      service:
+        name: grafana-server
+        state: started
+
+    - name: Enable grafana-server service
+      service:
+        name: grafana-server
+        enabled: yes
