@@ -1,0 +1,15 @@
+---
+# tasks file for roles/node-exporter
+- name: Create Node Exporter container
+  docker_container:
+    name: "{{ container_name }}"
+    image: prom/node-exporter:latest
+    networks:
+      - name: "{{ network }}"
+    recreate: yes
+    ports:
+      - "{{ container_port }}: 9100"
+    restart: yes
+    restart_policy: "{{ restart_policy }}"
+    purge_networks: yes
+    networks_cli_compatible: yes
