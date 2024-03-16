@@ -1,0 +1,73 @@
+---
+# tasks file for roles/prometheus
+- name: Download and unarchive Prometheus repository
+  unarchive:
+    src: https://github.com/prometheus/prometheus/releases/download/v{{ version }}/prometheus-{{ version }}.linux-{{ os_architecture }}.tar.gz
+    dest: /tmp
+    remote_src: true
+
+- name: Creates configuration directories
+  file:
+    path: "{{ item }}"
+    state: directory
+  loop:
+    - /etc/prometheus
+    - /var/lib/prometheus
+
+- name: Move prometheus binary files
+  copy:
+    src: "{{ item }}"
+    dest: /usr/local/bin/
+    mode: 0755
+    remote_src: true
+  loop:
+    - /tmp/prometheus-{{ version }}.linux-{{ os_architecture }}/prometheus
+    - /tmp/prometheus-{{ version }}.linux-{{ os_architecture }}/promtool
+
+- name: Move prometheus binary files
+  copy:
+    src: "{{ item }}"
+    dest: /etc/prometheus/
+    mode: 0755
+    remote_src: true
+  loop:
+    - /tmp/prometheus-{{ version }}.linux-{{ os_architecture }}/consoles/
+    - /tmp/prometheus-{{ version }}.linux-{{ os_architecture }}/console_libraries
+
+- name: Add Prometheus service configuration file
+  template:
+    src: prometheus.yml.j2
+    dest: /etc/prometheus/prometheus.yml
+    mode: 0755
+  notify: restart prometheus
+
+- name: Create Prometheus user
+  user:
+    name: "{{ user_name }}"
+    shell: /sbin/nologin
+    state: present
+
+- name: Set ownership for config files
+  file:
+    path: "{{ item }}"
+    owner: "{{ user_name }}"
+  loop:
+    - /etc/prometheus
+    - /var/lib/prometheus
+
+- name: Add Prometheus service configuration file
+  copy:
+    src: prometheus.service
+    dest: /etc/systemd/system/prometheus.service
+    mode: 0755
+  notify: restart prometheus
+
+- name: Start Prometheus service
+  service:
+    name: prometheus
+    state: started
+
+- name: Enable Prometheus service
+  service:
+    name: prometheus
+    enabled: yes

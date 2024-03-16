@@ -1,0 +1,36 @@
+---
+# tasks file for roles/node-exporter
+- name: Download and unarchive Node Exporter repository
+  unarchive:
+    src: https://github.com/prometheus/node_exporter/releases/download/v{{ version }}/node_exporter-{{ version }}.linux-{{ os_architecture }}.tar.gz
+    dest: /tmp
+    remote_src: true
+
+- name: Move Node Exporter binary file
+  copy:
+    src: /tmp/node_exporter-{{ version }}.linux-{{ os_architecture }}/node_exporter
+    dest: /usr/local/bin/node_exporter
+    mode: 0755
+    remote_src: true
+
+- name: Create Node Exporter user
+  user:
+    name: "{{ user_name }}"
+    shell: /sbin/nologin
+    state: present
+
+- name: Add Node Exporter service configuration file
+  copy:
+    src: node_exporter.service
+    dest: /etc/systemd/system/node_exporter.service
+  notify: restart node_exporter
+
+- name: Start Node Exporter service
+  service:
+    name: node_exporter
+    state: started
+
+- name: Enable Node Exporter service
+  service:
+    name: node_exporter
+    enabled: yes

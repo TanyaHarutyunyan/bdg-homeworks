@@ -1,0 +1,9 @@
+[Zabbix]
+16.170.164.6 ansible_user=ubuntu
+
+[Zabbix:vars]
+sql_user_name=zabbix
+sql_user_password=123456
+zabbix_ip=16.170.164.6
+zabbix_port=8080
+ubuntu_version=22.04

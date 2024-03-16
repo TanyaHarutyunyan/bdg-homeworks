@@ -1,0 +1,5 @@
+[Docker]
+16.170.255.114 ansible_user=ubuntu
+
+[Docker:vars]
+lsb_release=focal
