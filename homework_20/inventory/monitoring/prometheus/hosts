@@ -1,0 +1,2 @@
+[Prometheus]
+16.16.91.156 ansible_user=ubuntu

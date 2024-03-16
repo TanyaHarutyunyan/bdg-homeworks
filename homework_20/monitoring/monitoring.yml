@@ -1,0 +1,17 @@
+- name: Install and configure Node Exporter
+  become: true
+  hosts: NodeExporter
+  roles:
+    - role: node-exporter
+
+- name: Install and configure Prometheus
+  become: true
+  hosts: Prometheus
+  roles:
+    - role: prometheus
+
+- name: Install and configure Grafana
+  become: true
+  hosts: Grafana
+  roles:
+    - role: grafana

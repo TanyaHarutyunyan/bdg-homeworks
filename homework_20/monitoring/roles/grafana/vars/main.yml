@@ -1,4 +1,4 @@
 ---
 # vars file for roles/grafana
-prometheus_ip: 16.171.139.252
+prometheus_ip: 16.16.91.156
 prometheus_port: 9090

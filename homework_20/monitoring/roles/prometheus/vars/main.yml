@@ -1,6 +1,6 @@
 ---
 # vars file for roles/prometheus
-node_exporter_ip: 16.171.137.84
+node_exporter_ip: 16.16.124.165
 node_exporter_port: 9100
 version: 2.37.6
 os_architecture: amd64
