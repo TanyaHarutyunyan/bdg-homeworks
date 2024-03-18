@@ -1,25 +1,17 @@
-- name: Run Docker and Networking
-  hosts: Docker
+- name: Run Monitoring
+  hosts: Monitoring
   become: true
   roles:
     - docker
     - networking
-
-- name: Run NodeExporter1
-  hosts: NodeExporter1
-  become: true
-  roles:
     - node-exporter
-
-- name: Run NodeExporter2
-  hosts: NodeExporter2
-  become: true
-  roles:
-    - node-exporter
-
-- name: Run PrometheusGrafana
-  hosts: PrometheusGrafana
-  become: true
-  roles:
     - prometheus
     - grafana
+
+- name: Run Metrics
+  hosts: Metrics
+  become: true
+  roles:
+    - docker
+    - networking
+    - node-exporter
