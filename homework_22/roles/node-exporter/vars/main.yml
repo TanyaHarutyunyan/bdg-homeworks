@@ -1,0 +1,6 @@
+---
+# vars file for roles/node-exporter
+container_name: node-exporter
+network: monitoring
+container_port: 9100
+restart_policy: always

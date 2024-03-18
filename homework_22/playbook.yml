@@ -1,0 +1,17 @@
+- name: Run Monitoring
+  hosts: Monitoring
+  become: true
+  roles:
+    - docker
+    - networking
+    - node-exporter
+    - prometheus
+    - grafana
+
+- name: Run Metrics
+  hosts: Metrics
+  become: true
+  roles:
+    - docker
+    - networking
+    - node-exporter
