@@ -1,0 +1,33 @@
+---
+# tasks file for roles/grafana
+- name: Add Grafana datasources configuration file
+  template:
+    src: datasources.yml.j2
+    dest: /tmp/datasources.yml
+
+- name: Add Grafana dashboard configuration json file
+  copy:
+    src: node-exporter-full.json
+    dest: /tmp/node-exporter-full.json
+
+- name: Add Grafana dashboard configuration yaml file
+  copy:
+    src: node-exporter-full.yaml
+    dest: /tmp/node-exporter-full.yaml
+
+- name: Create Grafana container
+  docker_container:
+    name: grafana
+    image: grafana/grafana:latest
+    recreate: yes
+    ports:
+      - "3000:3000"
+    volumes:
+      - /tmp/node-exporter-full.json:/var/lib/grafana/dashboards/node-exporter-full.json
+      - /tmp/node-exporter-full.yaml:/etc/grafana/provisioning/dashboards/node-exporter-full.yaml
+      - /tmp/datasources.yml:/etc/grafana/provisioning/datasources/datasources.yml
+    env:
+      GF_SECURITY_ADMIN_USER: username
+      GF_SECURITY_ADMIN_PASSWORD: password
+    restart: yes
+    restart_policy: always
