@@ -1,0 +1,56 @@
+name: Monitoring CI/CD
+env:
+  Image_tag: ${{ github.run_number }}
+
+on:
+  push:
+    branches: [ "homework_23" ]
+#  workflow_dispatch:
+
+jobs:
+  build-push:
+
+    runs-on: ubuntu-latest
+
+    steps:
+      - uses: actions/checkout@v3
+
+      - name: Build Docker images
+        run: |
+          cd images/node-exporter
+          docker build . --file Dockerfile --tag tanyaharutyunyan/node-exporter:${{ env.Image_tag }}
+          cd ../prometheus
+          docker build . --file Dockerfile --tag tanyaharutyunyan/prometheus:${{ env.Image_tag }}
+
+      - name: Login Docker Hub
+        uses: docker/login-action@v3
+        with:
+          username: ${{ secrets.DOCKERHUB_USERNAME }}
+          password: ${{ secrets.DOCKERHUB_TOKEN }}
+
+      - name: Push Docker images Docker Hub
+        run: |
+          docker push tanyaharutyunyan/node-exporter:${{ env.Image_tag }}
+          docker push tanyaharutyunyan/prometheus:${{ env.Image_tag }}
+
+
+  deploy:
+
+    runs-on: ubuntu-latest
+
+    needs: [ build-push ]
+
+    steps:
+      - uses: actions/checkout@v3
+
+      - uses: webfactory/ssh-agent@v0.9.0
+        with:
+          ssh-private-key: ${{ secrets.SSH_PRIVATE_KEY }}
+
+      - name: Add keyscan
+        run: |
+          ssh-keyscan 13.53.169.64 >> ~/.ssh/known_hosts
+
+      - name: Run ansible playbook
+        run: |
+          ansible-playbook -i inventory/hosts -e image_tag=${{ env.Image_tag }} playbook.yml
