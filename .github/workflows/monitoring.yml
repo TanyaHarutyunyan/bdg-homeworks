@@ -17,7 +17,7 @@ jobs:
 
       - name: Build Docker images
         run: |
-          cd images/node-exporter
+          cd homework_23/images/node-exporter
           docker build . --file Dockerfile --tag tanyaharutyunyan/node-exporter:${{ env.Image_tag }}
           cd ../prometheus
           docker build . --file Dockerfile --tag tanyaharutyunyan/prometheus:${{ env.Image_tag }}
